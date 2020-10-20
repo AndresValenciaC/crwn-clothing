@@ -16,3 +16,22 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
   // if its not found in the array
   return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
 };
+
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+  const existingCartItem = cartItems.find(
+    (cartItem) => cartItem.id === cartItemToRemove.id
+  );
+
+  /** if quantity == 1 remove it, and keep all the ones where the cartItems
+   * Ids dont match the one we try to remove*/
+  if (existingCartItem.quantity === 1) {
+    return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id);
+  }
+  // if exist cartItem and quantity its not equal to 1
+
+  return cartItems.map((cartItem) =>
+    cartItem.id === cartItemToRemove.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      : cartItem
+  );
+};
