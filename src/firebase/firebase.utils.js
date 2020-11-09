@@ -40,6 +40,42 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+// funtion that aloud to put data into the dataBase only one batch at time
+export const addCollectionAndDocuments = async (
+  collectionkey,
+  objectsToAdd
+) => {
+  const collectionRef = firestore.collection(collectionkey);
+  const batch = firestore.batch();
+  objectsToAdd.forEach((obj) => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+  return await batch.commit();
+};
+
+// function that gets the snapshop from DB and converted to the format the app needs it, an object
+
+export const convertCollectionsSnapShotToMap = (collecttionsSnapshot) => {
+  const transformedCollections = collecttionsSnapshot.docs.map(
+    (docSnapshot) => {
+      const { title, items } = docSnapshot.data();
+
+      return {
+        routeName: encodeURI(title.toLowerCase()),
+        id: docSnapshot.id,
+        title,
+        items,
+      };
+    }
+  );
+
+  return transformedCollections.reduce((acumulador, collection) => {
+    acumulador[collection.title.toLowerCase()] = collection;
+    return acumulador;
+  }, {});
+};
+
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
