@@ -1,6 +1,6 @@
 # React App
 
->  React application, with react-router-dom, react hooks, Sass, Boostrap for react
+>  React application, with react-router-dom, react hooks, Sass, Redux, Mongo DB, Boostrap for react
 
 ## Quick Start
 
@@ -22,7 +22,7 @@ npm run client
 
 ## App Info
 
-Study case to understand how to desing and develop the integration of components into a react app
+Study case to understand how to desing and develop the integration of components into a react app and structure the flow of information and administration by Redux.
 
 ### Author
 
